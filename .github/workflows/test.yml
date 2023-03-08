@@ -1,0 +1,33 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    strategy:
+      # We support Node Latest, Active LTS, and the most recent Maintenance LTS.
+      # See https://nodejs.org/en/about/releases/ for Node release schedule.
+      matrix:
+        node: [14, 16, 18]
+        os: [ubuntu-20.04, macos-11, windows-2022]
+
+      # Allow all matrix configurations to complete, instead of cancelling as
+      # soon as one fails. Useful because we often have different kinds of
+      # failures depending on the OS.
+      fail-fast: false
+
+    # Sometimes windows is far slower than the other OSs. Give it enough
+    # time to complete if it's going to.
+    timeout-minutes: 40
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: node --version; npm --version
+      - run: npm ci
+      - run: npm run test
+

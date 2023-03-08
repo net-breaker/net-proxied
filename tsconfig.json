@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+      "declaration": true,
+      "noImplicitAny": true,
+      "noEmitOnError": true,
+      "noUnusedLocals": true,
+      "strictNullChecks": true,
+      "esModuleInterop": true,
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "target": "es2020",
+      "outDir": "./net-proxied",
+      "lib": ["es2020"]
+    },
+    "include": [
+      "src/**/*.ts"
+    ]
+  }
+  
