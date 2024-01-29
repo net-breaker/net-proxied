@@ -77,7 +77,7 @@ export class LinuxProxied {
         GNOMECommander.verifyConfig(config);
         break;
       default:
-        throw new Error("Unsupported desktop");
+        throw new Error(`Unsupported desktop:${this.desktopType}`);
     }
   }
 }

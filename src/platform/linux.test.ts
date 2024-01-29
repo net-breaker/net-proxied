@@ -1,6 +1,8 @@
+import { Executor } from "../executor";
 import { LinuxProxied, LinuxProxyConfig } from "./linux";
 
-const needTest = process.platform === "linux";
+const desktop = Executor.executeSync("echo $XDG_CURRENT_DESKTOP");
+const needTest = process.platform === "linux" && desktop !== "";
 
 test("desktop", () => {
   if (!needTest) return;
