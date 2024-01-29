@@ -179,21 +179,22 @@ class GNOMECommander {
   private static readonly newline = /\n/g;
   private static readonly singleQuotation = /'/g;
   private static readonly squareBrackets = /\[|\]/g;
+  private static readonly space = / /g;
 
   static status(): LinuxProxyConfig | null {
-    const httpProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.http host`).replace(this.singleQuotation, "").trim();
+    const httpProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.http host`).replace(this.singleQuotation, "")
     const httpProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.http port`).trim();
 
-    const httpsProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.https host`).replace(this.singleQuotation, "").trim();
+    const httpsProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.https host`).replace(this.singleQuotation, "")
     const httpsProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.https port`).trim();
 
-    const ftpProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.ftp host`).replace(this.singleQuotation, "").trim();
+    const ftpProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.ftp host`).replace(this.singleQuotation, "")
     const ftpProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.ftp port`).trim();
 
-    const socksProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.socks host`).replace(this.singleQuotation, "").trim();
+    const socksProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.socks host`).replace(this.singleQuotation, "")
     const socksProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.socks port`).trim();
 
-    const noProxy = Executor.executeSync(`gsettings get org.gnome.system.proxy ignore-hosts`).replace(this.squareBrackets, "").replace(this.singleQuotation, "").trim();
+    const noProxy = Executor.executeSync(`gsettings get org.gnome.system.proxy ignore-hosts`).replace(this.squareBrackets, "").replace(this.singleQuotation, "").replace(this.space, "")
     const useAuthentication = Executor.executeSync(`gsettings get org.gnome.system.proxy.http use-authentication`)
     return {
       http: httpProxyHost === "" || httpProxyPort === "" ? undefined : {
