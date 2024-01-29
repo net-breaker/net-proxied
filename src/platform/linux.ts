@@ -28,7 +28,7 @@ export class LinuxProxied {
       case "KDE":
         return KDECommander.status();
       default:
-        throw new Error("Unsupported desktop");
+        throw new Error(`Unsupported desktop:${this.desktopType}`);
     }
   }
 
@@ -42,7 +42,7 @@ export class LinuxProxied {
         KDECommander.enable(config);
         break;
       default:
-        throw new Error("Unsupported desktop");
+        throw new Error(`Unsupported desktop:${this.desktopType}`);
     }
   }
 
@@ -55,7 +55,7 @@ export class LinuxProxied {
         KDECommander.disable();
         break;
       default:
-        throw new Error("Unsupported desktop");
+        throw new Error(`Unsupported desktop:${this.desktopType}`);
     }
   }
 
@@ -64,7 +64,7 @@ export class LinuxProxied {
     if (desktop.includes("GNOME")) return "GNOME";
     if (desktop.includes("KDE")) return "KDE";
     if (desktop.includes("MATE")) return "MATE";
-    throw new Error("Unsupported desktop");
+    throw new Error(`Unsupported desktop:${desktop}`);
   }
 
 
