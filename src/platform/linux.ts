@@ -236,7 +236,7 @@ class GNOMECommander {
       Executor.executeSync(`gsettings set org.gnome.system.proxy.http authentication-user "${config.authentication.username}"`);
       Executor.executeSync(`gsettings set org.gnome.system.proxy.http authentication-password "${config.authentication.password}"`);
     } else {
-      Executor.executeSync(`gsettings set org.gnome.system.proxy.proxy use-authentication false`);
+      Executor.executeSync(`gsettings set org.gnome.system.proxy.http use-authentication false`);
     }
   }
 
