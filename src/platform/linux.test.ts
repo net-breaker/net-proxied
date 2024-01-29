@@ -31,7 +31,6 @@ test("enable", () => {
   };
   LinuxProxied.enable(config);
   const status = LinuxProxied.status();
-  console.log(status);
   if (status !== null) {
     expect(status.http!.hostname).toBe(config.http?.hostname);
     expect(status.http!.port).toBe(config.http?.port);
