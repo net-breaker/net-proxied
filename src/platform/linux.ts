@@ -19,8 +19,6 @@ export class LinuxProxyConfig {
 }
 
 export class LinuxProxied {
-  static desktopType = this.getDesktopType();
-
   static status(): LinuxProxyConfig | null {
     switch (this.desktopType) {
       case "GNOME":
@@ -59,7 +57,7 @@ export class LinuxProxied {
     }
   }
 
-  private static getDesktopType(): LinuxDesktopType {
+  static get desktopType(): LinuxDesktopType {
     const desktop = Executor.executeSync("echo $XDG_CURRENT_DESKTOP");
     if (desktop.includes("GNOME")) return "GNOME";
     if (desktop.includes("KDE")) return "KDE";
