@@ -216,8 +216,8 @@ class GNOMECommander {
       },
       noProxy: !noProxy ? undefined : noProxy.split(","),
       authentication: !useAuthentication ? undefined : {
-        username: Executor.executeSync(`gsettings get org.gnome.system.proxy.http authentication-user`),
-        password: Executor.executeSync(`gsettings get org.gnome.system.proxy.http authentication-password`)
+        username: Executor.executeSync(`gsettings get org.gnome.system.proxy.http authentication-user`).replace(this.singleQuotation, "").replace(this.newline, ""),
+        password: Executor.executeSync(`gsettings get org.gnome.system.proxy.http authentication-password`).replace(this.singleQuotation, "").replace(this.newline, "")
       }
     }
 
