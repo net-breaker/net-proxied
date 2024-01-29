@@ -182,10 +182,8 @@ class GNOMECommander {
   private static readonly space = / /g;
 
   static status(): LinuxProxyConfig | null {
-    const enabled = Executor.executeSync(`gsettings set org.gnome.system.proxy mode "manual"`).replace(this.singleQuotation, "").replace(this.newline, "") !== "none"
+    const enabled = Executor.executeSync(`gsettings get org.gnome.system.proxy mode`).replace(this.singleQuotation, "").replace(this.newline, "") !== "none"
     if (enabled) {
-
-
       const httpProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.http host`).replace(this.singleQuotation, "").replace(this.newline, "")
       const httpProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.http port`).trim();
 
