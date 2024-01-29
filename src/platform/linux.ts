@@ -182,45 +182,51 @@ class GNOMECommander {
   private static readonly space = / /g;
 
   static status(): LinuxProxyConfig | null {
-    const httpProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.http host`).replace(this.singleQuotation, "").replace(this.newline, "")
-    const httpProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.http port`).trim();
+    const enabled = Executor.executeSync(`gsettings set org.gnome.system.proxy mode "manual"`).replace(this.singleQuotation, "").replace(this.newline, "") !== "none"
+    if (enabled) {
 
-    const httpsProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.https host`).replace(this.singleQuotation, "").replace(this.newline, "")
-    const httpsProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.https port`).trim();
 
-    const ftpProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.ftp host`).replace(this.singleQuotation, "").replace(this.newline, "")
-    const ftpProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.ftp port`).trim();
+      const httpProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.http host`).replace(this.singleQuotation, "").replace(this.newline, "")
+      const httpProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.http port`).trim();
 
-    const socksProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.socks host`).replace(this.singleQuotation, "").replace(this.newline, "")
-    const socksProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.socks port`).trim();
+      const httpsProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.https host`).replace(this.singleQuotation, "").replace(this.newline, "")
+      const httpsProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.https port`).trim();
 
-    const noProxy = Executor.executeSync(`gsettings get org.gnome.system.proxy ignore-hosts`).replace(this.squareBrackets, "").replace(this.singleQuotation, "").replace(this.space, "").replace(this.newline, "")
-    const useAuthentication = Executor.executeSync(`gsettings get org.gnome.system.proxy.http use-authentication`)
-    return {
-      http: httpProxyHost === "" || httpProxyPort === "" ? undefined : {
-        hostname: httpProxyHost,
-        port: parseInt(httpProxyPort)
-      },
-      https: httpsProxyHost === "" || httpsProxyPort === "" ? undefined : {
-        hostname: httpsProxyHost,
-        port: parseInt(httpsProxyPort)
-      },
+      const ftpProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.ftp host`).replace(this.singleQuotation, "").replace(this.newline, "")
+      const ftpProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.ftp port`).trim();
 
-      ftp: ftpProxyHost === "" || ftpProxyPort === "" ? undefined : {
-        hostname: ftpProxyHost,
-        port: parseInt(ftpProxyPort)
-      },
-      socks: socksProxyHost === "" || socksProxyPort === "" ? undefined : {
-        hostname: socksProxyHost,
-        port: parseInt(socksProxyPort)
-      },
-      noProxy: !noProxy ? undefined : noProxy.split(","),
-      authentication: !useAuthentication ? undefined : {
-        username: Executor.executeSync(`gsettings get org.gnome.system.proxy.http authentication-user`).replace(this.singleQuotation, "").replace(this.newline, ""),
-        password: Executor.executeSync(`gsettings get org.gnome.system.proxy.http authentication-password`).replace(this.singleQuotation, "").replace(this.newline, "")
+      const socksProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.socks host`).replace(this.singleQuotation, "").replace(this.newline, "")
+      const socksProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.socks port`).trim();
+
+      const noProxy = Executor.executeSync(`gsettings get org.gnome.system.proxy ignore-hosts`).replace(this.squareBrackets, "").replace(this.singleQuotation, "").replace(this.space, "").replace(this.newline, "")
+      const useAuthentication = Executor.executeSync(`gsettings get org.gnome.system.proxy.http use-authentication`)
+      return {
+        http: httpProxyHost === "" || httpProxyPort === "" ? undefined : {
+          hostname: httpProxyHost,
+          port: parseInt(httpProxyPort)
+        },
+        https: httpsProxyHost === "" || httpsProxyPort === "" ? undefined : {
+          hostname: httpsProxyHost,
+          port: parseInt(httpsProxyPort)
+        },
+
+        ftp: ftpProxyHost === "" || ftpProxyPort === "" ? undefined : {
+          hostname: ftpProxyHost,
+          port: parseInt(ftpProxyPort)
+        },
+        socks: socksProxyHost === "" || socksProxyPort === "" ? undefined : {
+          hostname: socksProxyHost,
+          port: parseInt(socksProxyPort)
+        },
+        noProxy: !noProxy ? undefined : noProxy.split(","),
+        authentication: !useAuthentication ? undefined : {
+          username: Executor.executeSync(`gsettings get org.gnome.system.proxy.http authentication-user`).replace(this.singleQuotation, "").replace(this.newline, ""),
+          password: Executor.executeSync(`gsettings get org.gnome.system.proxy.http authentication-password`).replace(this.singleQuotation, "").replace(this.newline, "")
+        }
       }
+    } else {
+      return null;
     }
-
   }
 
   static enable(config: LinuxProxyConfig): void {
