@@ -177,11 +177,12 @@ class KDECommander {
  */
 class GNOMECommander {
   private static readonly newline = /\n/g;
+  private static readonly quotation = /'/g;
 
   static status(): LinuxProxyConfig | null {
     const httpProxyConfig = Executor.executeSync(`gsettings get org.gnome.system.proxy.http host`)
 
-console.log(httpProxyConfig)
+console.log(httpProxyConfig.replace(this.quotation, ""))
 
     const httpsProxyConfig = Executor.executeSync(`gsettings get org.gnome.system.proxy.https host`).split(" ");
     const ftpProxyConfig = Executor.executeSync(`gsettings get org.gnome.system.proxy.ftp host`).split(" ");
