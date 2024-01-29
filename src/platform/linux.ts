@@ -200,8 +200,8 @@ class GNOMECommander {
       },
       noProxy: !noProxy ? undefined : noProxy.split(","),
       authentication: !useAuthentication ? undefined : {
-        username: Executor.executeSync(`gsettings get org.gnome.system.http authentication-user`),
-        password: Executor.executeSync(`gsettings get org.gnome.system.http authentication-password`)
+        username: Executor.executeSync(`gsettings get org.gnome.system.proxy.http authentication-user`),
+        password: Executor.executeSync(`gsettings get org.gnome.system.proxy.http authentication-password`)
       }
     }
 
@@ -226,16 +226,17 @@ class GNOMECommander {
       Executor.executeSync(`gsettings set org.gnome.system.proxy.socks port ${config.socks.port}`);
     }
     if (config.noProxy && config.noProxy.length > 0) {
-      Executor.executeSync(`gsettings set org.gnome.system.proxy ignore-hosts "${config.noProxy.join(",")}"`);
+      const items = config.noProxy.map((item) =>  `'${item}'`).join(",");
+      Executor.executeSync(`gsettings set org.gnome.system.proxy ignore-hosts "[${items}]"`);
     } else {
       Executor.executeSync(`gsettings set org.gnome.system.proxy ignore-hosts ""`);
     }
     if (config.authentication) {
       Executor.executeSync(`gsettings get org.gnome.system.proxy.http use-authentication true`);
-      Executor.executeSync(`gsettings set org.gnome.system.http authentication-user "${config.authentication.username}"`);
-      Executor.executeSync(`gsettings set org.gnome.system.http authentication-password "${config.authentication.password}"`);
+      Executor.executeSync(`gsettings set org.gnome.system.proxy.http authentication-user "${config.authentication.username}"`);
+      Executor.executeSync(`gsettings set org.gnome.system.proxy.http authentication-password "${config.authentication.password}"`);
     } else {
-      Executor.executeSync(`gsettings set org.gnome.system.proxy.http use-authentication false`);
+      Executor.executeSync(`gsettings set org.gnome.system.proxy.proxy use-authentication false`);
     }
   }
 
