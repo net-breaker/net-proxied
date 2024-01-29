@@ -7,6 +7,7 @@
 
 - Windows operating system
 - Mac operating system
+- Linux operating system (KDE,GNOME)
 
 ## Install
 
@@ -51,6 +52,29 @@ MacProxied.enable(config);
 
 // You can also disable it
 // MacProxied.disable();
+```
+
+Set up proxy on Linux:
+
+```typescript
+import { LinuxProxied, LinuxProxyConfig } from "net-proxied";
+
+const baseProxy: BaseProxyConfig = {
+  hostname: "10.20.30.11",
+  port: 1111
+};
+const config: LinuxProxyConfig = {
+  http: baseProxy,
+  https: baseProxy,
+  ftp: baseProxy,
+  socks: baseProxy,
+  noProxy: ["localhost", "192.168.*", "10.*"]
+};
+
+LinuxProxied.enable(config);
+
+// You can also disable it
+// LinuxProxied.disable();
 ```
 
 ## License
