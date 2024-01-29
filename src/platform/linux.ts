@@ -86,6 +86,8 @@ export class LinuxProxied {
  * KDE desktop environment
  */
 class KDECommander {
+  private static readonly newline = /\n/g;
+
   static status(): LinuxProxyConfig | null {
     const enabled = Executor.executeSync(`kreadconfig5 --file kioslaverc --group "Proxy Settings" --key "ProxyType"`).trim() === "1";
     if (enabled) {
@@ -93,7 +95,7 @@ class KDECommander {
       const httpsProxyConfig = Executor.executeSync(`kreadconfig5 --file kioslaverc --group "Proxy Settings" --key "httpsProxy"`).split(" ");
       const ftpProxyConfig = Executor.executeSync(`kreadconfig5 --file kioslaverc --group "Proxy Settings" --key "ftpProxy"`).split(" ");
       const socksProxyConfig = Executor.executeSync(`kreadconfig5 --file kioslaverc --group "Proxy Settings" --key "socksProxy"`).split(" ");
-      const noProxy = Executor.executeSync(`kreadconfig5 --file kioslaverc --group "Proxy Settings" --key "NoProxyFor"`).replace(/\n/g, "")
+      const noProxy = Executor.executeSync(`kreadconfig5 --file kioslaverc --group "Proxy Settings" --key "NoProxyFor"`).replace(this.newline, "")
       return {
         http: !httpProxyConfig ? undefined : {
           hostname: httpProxyConfig[0],
@@ -174,8 +176,13 @@ class KDECommander {
  * GNOME desktop environment
  */
 class GNOMECommander {
+  private static readonly newline = /\n/g;
+
   static status(): LinuxProxyConfig | null {
-    const httpProxyConfig = Executor.executeSync(`gsettings get org.gnome.system.proxy.http host`).split(" ");
+    const httpProxyConfig = Executor.executeSync(`gsettings get org.gnome.system.proxy.http host`)
+
+console.log(httpProxyConfig)
+
     const httpsProxyConfig = Executor.executeSync(`gsettings get org.gnome.system.proxy.https host`).split(" ");
     const ftpProxyConfig = Executor.executeSync(`gsettings get org.gnome.system.proxy.ftp host`).split(" ");
     const socksProxyConfig = Executor.executeSync(`gsettings get org.gnome.system.proxy.socks host`).split(" ");
