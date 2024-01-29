@@ -182,19 +182,19 @@ class GNOMECommander {
   private static readonly space = / /g;
 
   static status(): LinuxProxyConfig | null {
-    const httpProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.http host`).replace(this.singleQuotation, "")
+    const httpProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.http host`).replace(this.singleQuotation, "").replace(this.newline, "")
     const httpProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.http port`).trim();
 
-    const httpsProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.https host`).replace(this.singleQuotation, "")
+    const httpsProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.https host`).replace(this.singleQuotation, "").replace(this.newline, "")
     const httpsProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.https port`).trim();
 
-    const ftpProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.ftp host`).replace(this.singleQuotation, "")
+    const ftpProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.ftp host`).replace(this.singleQuotation, "").replace(this.newline, "")
     const ftpProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.ftp port`).trim();
 
-    const socksProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.socks host`).replace(this.singleQuotation, "")
+    const socksProxyHost = Executor.executeSync(`gsettings get org.gnome.system.proxy.socks host`).replace(this.singleQuotation, "").replace(this.newline, "")
     const socksProxyPort = Executor.executeSync(`gsettings get org.gnome.system.proxy.socks port`).trim();
 
-    const noProxy = Executor.executeSync(`gsettings get org.gnome.system.proxy ignore-hosts`).replace(this.squareBrackets, "").replace(this.singleQuotation, "").replace(this.space, "")
+    const noProxy = Executor.executeSync(`gsettings get org.gnome.system.proxy ignore-hosts`).replace(this.squareBrackets, "").replace(this.singleQuotation, "").replace(this.space, "").replace(this.newline, "")
     const useAuthentication = Executor.executeSync(`gsettings get org.gnome.system.proxy.http use-authentication`)
     return {
       http: httpProxyHost === "" || httpProxyPort === "" ? undefined : {
