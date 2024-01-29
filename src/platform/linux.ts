@@ -191,10 +191,10 @@ class GNOMECommander {
     const noProxy = Executor.executeSync(`gsettings get org.gnome.system.proxy ignore-hosts`)
     const useAuthentication = Executor.executeSync(`gsettings get org.gnome.system.proxy.http use-authentication`)
     return {
-      http: !httpProxyConfig ? undefined : {
-        hostname: httpProxyConfig[0],
-        port: parseInt(httpProxyConfig[1])
-      },
+      // http: !httpProxyConfig ? undefined : {
+      //   hostname: httpProxyConfig[0],
+      //   port: parseInt(httpProxyConfig[1])
+      // },
       https: !httpsProxyConfig ? undefined : {
         hostname: httpsProxyConfig[0],
         port: parseInt(httpsProxyConfig[1])
