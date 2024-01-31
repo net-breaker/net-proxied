@@ -57,18 +57,25 @@ MacProxied.enable(config);
 Set up proxy on Linux:
 
 ```typescript
-import { LinuxProxied, LinuxProxyConfig } from "net-proxied";
+import { Authentication, BaseProxyConfig, LinuxProxied, LinuxProxyConfig } from "net-proxied";
 
 const baseProxy: BaseProxyConfig = {
-  hostname: "10.20.30.11",
-  port: 1111
+  hostname: "10.20.30.40",
+  port: 5060
 };
+
+const authentication: Authentication = {
+  username: "username",
+  password: "password"
+};
+
 const config: LinuxProxyConfig = {
   http: baseProxy,
   https: baseProxy,
   ftp: baseProxy,
   socks: baseProxy,
-  noProxy: ["localhost", "192.168.*", "10.*"]
+  noProxy: ["localhost", "192.168.*", "10.*"],
+  authentication: authentication
 };
 
 LinuxProxied.enable(config);

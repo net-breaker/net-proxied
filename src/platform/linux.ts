@@ -1,13 +1,9 @@
+import { Authentication } from "../authentication";
 import { BaseProxyConfig } from "../base-proxy-config";
 import { Executor } from "../executor";
 
 export type LinuxDesktopType = "GNOME" | "KDE" | "MATE";
 export type LinuxProxyType = "http" | "https" | "ftp" | "socks";
-
-export interface Authentication {
-  username: string;
-  password: string;
-}
 
 export class LinuxProxyConfig {
   http?: BaseProxyConfig;

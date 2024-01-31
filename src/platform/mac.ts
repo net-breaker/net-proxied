@@ -1,3 +1,4 @@
+import { Authentication } from "../authentication";
 import { BaseProxyConfig } from "../base-proxy-config";
 import { Executor } from "../executor";
 
@@ -22,11 +23,6 @@ export class MacProxyConfig implements BaseProxyConfig {
    * default: ["web", "secureweb"]
    */
   types: MacProxyType[];
-}
-
-export interface Authentication {
-  username: string;
-  password: string;
 }
 
 export interface NetworkService {
